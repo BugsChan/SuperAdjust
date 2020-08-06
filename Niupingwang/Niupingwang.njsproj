@@ -1,0 +1,70 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>Niupingwang</Name>
+    <RootNamespace>Niupingwang</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>922e049f-6572-419a-8604-fcafa17d7d49</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>app.js</StartupFile>
+    <StartWebBrowser>False</StartWebBrowser>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <StartWebBrowser>false</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="app.js" />
+    <Content Include="Conf.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="config.json" />
+    <Content Include="init.sql" />
+    <Content Include="Modules\AdustApi.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Modules\api.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Modules\DBUtil.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Modules\Login.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Modules\SendMsg.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Modules\register.js" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Content Include="userImages\test.txt" />
+    <Content Include="websource\css\index_pc.css" />
+    <Content Include="websource\imgs\index_banner.png" />
+    <Content Include="websource\imgs\logo.png" />
+    <Content Include="websource\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modules\" />
+    <Folder Include="userImages\" />
+    <Folder Include="websource\" />
+    <Folder Include="websource\css\" />
+    <Folder Include="websource\imgs\" />
+    <Folder Include="websource\js\" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+</Project>

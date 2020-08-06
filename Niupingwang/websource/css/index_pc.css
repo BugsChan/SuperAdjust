@@ -1,0 +1,138 @@
+
+* {
+	margin: 0rem;
+	padding: 0rem;
+}
+
+body{
+	background-color: white;
+}
+
+#container{
+	width: 1100px;
+	margin: auto;
+}
+
+footer{
+	height: 150px;
+	font-size: 12px;
+	background-color: gray;
+	cursor: pointer;
+}
+
+footer *{
+	color: #cacaca;
+	cursor: pointer;
+}
+
+footer div{
+	height: 120px;
+	margin-top: 30px;
+	float: left;
+	padding-left: 10%;
+	width: 39.5%;
+}
+
+footer p{
+	height: 22px;
+}
+
+footer a{
+	text-decoration: none;
+}
+footer a:hover{
+	text-decoration: underline;
+}
+
+footer .right{
+	padding-left: 0px;
+}
+
+header{
+	color: #eee;
+	position: fixed;
+	display: block;
+	top: 0px;
+	width: 1100px;
+	background-color: rgba(0,0,0,0.3);
+}
+header>*{
+	float: left;
+}
+header #logo{
+	height: 100%;
+	float: left;
+	padding: 0.5rem 2.125rem;
+}
+
+#logo img{
+	height: 80%;
+}
+header ul{
+	height: 100%;
+	margin-left: 5.625rem;
+}
+
+header li{
+	display: block;
+	float: left;
+	height: 100%;
+	width: 110px;
+	font-size: 17px;
+	list-style: none;
+	text-align: center;
+	margin: 0px 15px;
+}
+
+header a{
+	color: inherit;
+	text-decoration: none;
+	height: 100%;
+}
+header a:hover{
+	text-decoration: underline;
+}
+
+main .center{
+	text-align: center;
+}
+
+main .right{
+	text-align: right;
+}
+
+main .first{
+	padding-top: 19% !important;
+}
+
+main .banner{
+	font-size: 40px;
+	font-weight: 100;
+	padding: 10px 250px;
+}
+
+#page1{
+	background-image: url(../imgs/index_banner.png);
+	background-position: center;
+	background-size: cover;
+}
+
+.Btn{
+	width: 100px;
+	height: 50px;
+	font-size: 18px;
+	background-color: darkcyan;
+	line-height: 50px;
+	text-align: center;
+	color: white;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.Btn:hover{
+	background-color: darkblue;
+}
+
+.float_right{
+	float: right;
+}

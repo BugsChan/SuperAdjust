@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>超级点评 - 一切皆可评论</title>
+		<meta name="keywords" content="评论,牛评,超级点评">
+		<meta name="description" 
+		content="超级点评是一款可以对任何网站进行评论的浏览器插件">
+		<link rel="stylesheet" type="text/css" href="css/index_pc.css"/>
+		
+		<!--开发环境 Vue-->
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		
+		<!--生产环境 Vue-->
+		<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+	</head>
+	<body>
+		<div id="container">
+		<header :style="'height:' + headerHeight + 'px;'">
+			<p id="logo">
+				<img src="imgs/logo.png">
+			</p>
+			<ul :style="'line-height:' + headerHeight + 'px;'">
+				<li><a href="/">产品</a></li>
+				<li><a href="/">软件下载</a></li>
+				<li><a href="/">API接入</a></li>
+				<li><a href="/">关于我们</a></li>
+			</ul>
+		</header>
+		<main>
+			<div id="page1" :style="'height:' + mainHeight + 'px;'">
+				<p class="first banner">评论一切的浏览器插件，</p>
+				<p class="banner">超级点评！<a href="/" class="float_right Btn" style="margin-right: 150px;">软件下载</a></p>
+			</div>
+			<div :style="'height:' + mainHeight + 'px;'">
+				
+			</div>
+		</main>
+		<footer>
+			<div class="left">
+				<p>Site is powered by bugs Co, ltd,.</p>
+				<p>&copy; 2019 ~ {{year}} 成都超级点评技术有限责任公司</p>
+				<p><a href="/">X ICP 备 XXXXXXXXX 号</a></p>
+				<p><a href="/">X 公安网备XXXXXXXX号</a></p>
+			</div>
+			<div class="right">
+				<p><a href="/">联系我们</a></p>
+				<p><a href="/">问题反馈</a></p>
+				<p><a href="/">API接入</a></p>
+				<p><a href="/">手机版页面</a></p>
+				<p><a href="/">访问数据 (开发人员使用)</a></p>
+			</div>
+		</footer>
+		</div>
+		<script type="text/javascript">
+			var main = new Vue({
+				el: "main",
+				data:{
+					mainHeight: (document.documentElement.clientHeight 
+						|| document.body.clientHeight || 600) > 700 ? 700: (document.documentElement.clientHeight 
+						|| document.body.clientHeight || 600)
+				}
+			});
+			var footer = new Vue({
+				el:"footer",
+				data:{
+					year: new Date().getFullYear()
+				}
+			});
+			var header = new Vue({
+				el:"header",
+				data:{
+					headerHeight: main.mainHeight / 8
+				}
+			});
+		</script>
+	</body>
+</html>

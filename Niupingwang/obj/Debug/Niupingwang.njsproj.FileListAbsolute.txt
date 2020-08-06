@@ -1,0 +1,3 @@
+H:\coding\Niupingwang\Niupingwang\obj\Debug\Niupingwang.njsprojAssemblyReference.cache
+H:\coding\Niupingwang\Niupingwang\obj\Debug\Niupingwang.njsproj.CoreCompileInputs.cache
+H:\coding\Niupingwang\Niupingwang\bin\Microsoft.NodejsTools.WebRole.dll

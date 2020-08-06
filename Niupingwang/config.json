@@ -1,0 +1,15 @@
+{
+  "database": {
+    "url": "mongodb://127.0.0.1:27017/",
+    "dbName": "Niupingwang",
+    "collections": {
+      "ensure": [ "phonenum", "ensureid" ],
+      "users": [ "id", "phonenum", "name", "salt", "passwordhash", "icon" ],
+      "adjust": [ "adjid", "pageIndex", "userid", "to", "content", "time" ],
+      "like": ["userid", "adjid"]
+    }
+  },
+  "icon": {
+    "baseUrl": "/UserImgs/"
+  }
+}
