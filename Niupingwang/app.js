@@ -12,7 +12,8 @@ const api = require("./Modules/api.js");
 app.get("/api", api);
 
 const adjustapi = require("./Modules/AdustApi");
-app.post("/api/adjust", adjustapi);
+const jsonParser = require("body-parser").json();
+app.post("/api/adjust", jsonParser, adjustapi);
 
 app.use("/uploadedImages/", express.static("userImages"));
 

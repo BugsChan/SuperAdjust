@@ -1,0 +1,28 @@
+
+#container {
+    width: 100%;
+    margin: auto;
+}
+
+footer {
+    height: 600pt;
+    font-size: 25pt;
+    background-color: gray;
+    cursor: pointer;
+}
+
+footer div {
+    height: 250pt;
+    margin-top: 50pt;
+    padding-left: 10%;
+    width: 100%;
+}
+
+footer .right{
+    
+}
+
+
+footer p {
+    height: 35pt;
+}

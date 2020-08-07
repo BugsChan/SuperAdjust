@@ -25,14 +25,16 @@ db.ensure.ensureIndex({"phonenum": 1}, {"unique": true});
 
 db.adjust.insert({
 	"adjid":"PH",
-	"pageIndex":"nixx.com/index.html", 
-	"userid":"YD", 
+	"pageIndex":"nixx.com/index.html",
+	"header": null,
+	"userid":"YD",
 	"to":null, 
 	"content":"xx", 
 	"time":"xxxxx"
 });
 
 db.adjust.ensureIndex({"adjid": 1}, {"unique": true});
-db.adjust.ensureIndex({"pageIndex": 1, "to": 1, "time": -1});
+db.adjust.ensureIndex({"pageIndex": 1, "header": 1, "time": -1});
+db.adjust.ensureIndex({"userid": 1});
 
 db.like.insert({"userid": "PH", "adjid": "PH"});

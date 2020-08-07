@@ -5,7 +5,7 @@
 }
 
 body{
-	background-color: white;
+	background-color: #dde0dd;
 }
 
 #container{
@@ -102,7 +102,7 @@ main .right{
 }
 
 main .first{
-	padding-top: 19% !important;
+	padding-top: 16% !important;
 }
 
 main .banner{
@@ -135,4 +135,28 @@ main .banner{
 
 .float_right{
 	float: right;
+}
+
+#page2 {
+	background-image: url(../imgs/banner2.png);
+	background-position: center;
+	background-size: cover;
+}
+#page3 {
+	background-image: url(../imgs/banner3.png);
+	background-position: center;
+	background-size: cover;
+}
+
+.font_15{
+	font-size:15px;
+}
+
+main .content {
+	font-size: 17px;
+	text-indent: 2em;
+	line-height: 25px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	text-align:justify;
 }

@@ -5,7 +5,7 @@
     "collections": {
       "ensure": [ "phonenum", "ensureid" ],
       "users": [ "id", "phonenum", "name", "salt", "passwordhash", "icon" ],
-      "adjust": [ "adjid", "pageIndex", "userid", "to", "content", "time" ],
+      "adjust": [ "adjid", "pageIndex", "header", "userid", "to", "content", "time" ],
       "like": ["userid", "adjid"]
     }
   },

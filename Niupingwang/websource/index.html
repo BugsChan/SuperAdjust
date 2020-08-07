@@ -7,7 +7,25 @@
 		<meta name="description" 
 		content="超级点评是一款可以对任何网站进行评论的浏览器插件">
 		<link rel="stylesheet" type="text/css" href="css/index_pc.css"/>
-		
+        <link id="mbCss" href="css/index_mb.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            var deviceType =
+                (function () {
+                    var userAgent = navigator.userAgent;
+                    if (userAgent.includes("Windows")) {
+                        return "pc";
+                    } else if (userAgent.includes("iPhone")
+                        || userAgent.includes("Android")) {
+                        return "mobile";
+                    } else {
+                        return "pc";
+                    }
+                })();
+			if (deviceType === "pc") {
+				var mbcss = document.querySelector("#mbCss");
+				mbcss.parentNode.removeChild(mbcss);
+            };
+		</script>
 		<!--开发环境 Vue-->
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		
@@ -21,10 +39,10 @@
 				<img src="imgs/logo.png">
 			</p>
 			<ul :style="'line-height:' + headerHeight + 'px;'">
-				<li><a href="/">产品</a></li>
-				<li><a href="/">软件下载</a></li>
-				<li><a href="/">API接入</a></li>
-				<li><a href="/">关于我们</a></li>
+				<li><a href="#page2">产品</a></li>
+				<li><a href="#page1">软件下载</a></li>
+				<li><a href="#page3">API接入</a></li>
+				<li><a href="https://docs.qq.com/doc/DUWJYTXp3bldRY250">关于我们</a></li>
 			</ul>
 		</header>
 		<main>
@@ -32,16 +50,41 @@
 				<p class="first banner">评论一切的浏览器插件，</p>
 				<p class="banner">超级点评！<a href="/" class="float_right Btn" style="margin-right: 150px;">软件下载</a></p>
 			</div>
-			<div :style="'height:' + mainHeight + 'px;'">
-				
+			<div id="page2" :style="'height:' + mainHeight + 'px;'">
+				<p class="banner" style="padding-top: 8%;">
+					打破传统限制，分享不同观点
+				</p>
+				<p class="banner content" style="padding-top: 18px;">
+					我们发现，很多网站和网页并不允许评论。
+					或许，你想轻轻调侃，哂笑一番；也或许，你只是想倾听别人的高谈阔论。
+				</p>
+				<p class="content banner">
+					超级点评是一个第三方的评论软件。使用超级点评，你可以在任意网页上随意评论，
+					抑或为别人的评论发出会心一笑。我们相信：每一个网站都会宛如一个开放的广场，
+					每一条评论背后都会有一个值得干杯的朋友。
+				</p>
+			</div>
+			<div id="page3" :style="'height:' + mainHeight + 'px;'">
+				<p class="banner" style="padding-top: 8%;">
+					API接入
+				</p>
+				<p class="banner content" style="padding-top: 18px;">
+					对传统的网站开发者而言，评论区的开发一般成本较高。
+					超级点评保持开放的精神。
+					任何网页——哪怕是静态网页——都可以很容易的接入超级点评，无需用户下载插件，即可快速获得评论区功能。
+				</p>
+				<p class="banner">
+					<a href="https://docs.qq.com/doc/DUWtlYU5NVXNvTkdi" class="Btn">查看文档</a>
+				</p>
 			</div>
 		</main>
 		<footer>
 			<div class="left">
-				<p>Site is powered by bugs Co, ltd,.</p>
+				<p>Site is powered by SuperAdjust Co, ltd,.</p>
 				<p>&copy; 2019 ~ {{year}} 成都超级点评技术有限责任公司</p>
 				<p><a href="/">X ICP 备 XXXXXXXXX 号</a></p>
 				<p><a href="/">X 公安网备XXXXXXXX号</a></p>
+				<p><a href="/">用户协议</a></p>
 			</div>
 			<div class="right">
 				<p><a href="/">联系我们</a></p>
@@ -55,10 +98,8 @@
 		<script type="text/javascript">
 			var main = new Vue({
 				el: "main",
-				data:{
-					mainHeight: (document.documentElement.clientHeight 
-						|| document.body.clientHeight || 600) > 700 ? 700: (document.documentElement.clientHeight 
-						|| document.body.clientHeight || 600)
+				data: {
+					mainHeight: deviceType == "pc" ? 530 : (document.documentElement.clientHeight || document.body.clientHeight)
 				}
 			});
 			var footer = new Vue({
