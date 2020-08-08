@@ -1,12 +1,116 @@
 
-#container {
-    width: 100%;
-    margin: auto;
+* {
+    margin: 0rem;
+    padding: 0rem;
+}
+
+body {
+    background-color: #dde0dd;
+    position: absolute;
 }
 
 footer {
+    height: 150px;
+    font-size: 12px;
+    background-color: gray;
+    cursor: pointer;
+}
+
+footer * {
+    color: #cacaca;
+    cursor: pointer;
+}
+
+footer div {
+    height: 120px;
+    margin-top: 30px;
+    float: left;
+    padding-left: 10%;
+    width: 39.5%;
+}
+
+footer p {
+    height: 22px;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+header {
+    display:none;
+}
+
+main .center {
+    text-align: center;
+}
+
+main .right {
+    text-align: right;
+}
+
+main .first {
+    padding-top: 550pt !important;
+}
+
+main .banner {
+    font-size: 60pt;
+    font-weight: 100;
+    padding: 10px 60pt;
+}
+
+#page1 {
+    background-image: url(../imgs/index_banner.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.Btn {
+    width: 300pt;
+    height: 120pt;
+    font-size: 45pt;
+    background-color: darkcyan;
+    line-height: 120pt;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+.float_right {
+    float: right;
+}
+
+#page2 {
+    background-image: url(../imgs/banner2.png);
+    background-position: center;
+    background-size: cover;
+}
+
+#page3 {
+    background-image: url(../imgs/banner3.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.font_15 {
+    font-size: 15px;
+}
+
+main .content {
+    font-size: 40pt;
+    text-indent: 2em;
+    line-height: 50pt;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    text-align: justify;
+}
+
+
+footer {
     height: 600pt;
-    font-size: 25pt;
+    font-size: 30pt;
     background-color: gray;
     cursor: pointer;
 }
@@ -18,11 +122,15 @@ footer div {
     width: 100%;
 }
 
-footer .right{
-    
+#container{
+    width: 100%;
+    padding:0px;
+    margin:auto;
+    overflow:auto;
 }
-
 
 footer p {
     height: 35pt;
 }
+
+

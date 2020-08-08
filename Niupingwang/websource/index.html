@@ -1,37 +1,40 @@
 ﻿<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>超级点评 - 一切皆可评论</title>
-		<meta name="keywords" content="评论,牛评,超级点评">
-		<meta name="description" 
-		content="超级点评是一款可以对任何网站进行评论的浏览器插件">
-		<link rel="stylesheet" type="text/css" href="css/index_pc.css"/>
-        <link id="mbCss" href="css/index_mb.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript">
-            var deviceType =
-                (function () {
-                    var userAgent = navigator.userAgent;
-                    if (userAgent.includes("Windows")) {
-                        return "pc";
-                    } else if (userAgent.includes("iPhone")
-                        || userAgent.includes("Android")) {
-                        return "mobile";
-                    } else {
-                        return "pc";
-                    }
-                })();
-			if (deviceType === "pc") {
-				var mbcss = document.querySelector("#mbCss");
-				mbcss.parentNode.removeChild(mbcss);
-            };
-		</script>
-		<!--开发环境 Vue-->
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-		
-		<!--生产环境 Vue-->
-		<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
-	</head>
+<head>
+	<meta charset="utf-8">
+	<title>超级点评 - 一切皆可评论</title>
+	<meta name="keywords" content="评论,牛评,超级点评">
+	<meta name="description"
+		  content="超级点评是一款可以对任何网站进行评论的浏览器插件">
+	<link id="pcCss" rel="stylesheet" type="text/css" href="css/index_pc.css" />
+	<link id="mbCss" href="css/index_mb.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		var deviceType =
+			(function () {
+				var userAgent = navigator.userAgent;
+				if (userAgent.includes("Windows")) {
+					return "pc";
+				} else if (userAgent.includes("iPhone")
+					|| userAgent.includes("Android")) {
+					return "mobile";
+				} else {
+					return "pc";
+				}
+			})();
+		if (deviceType === "pc") {
+			var mbcss = document.querySelector("#mbCss");
+			mbcss.parentNode.removeChild(mbcss);
+		} else {
+			var pcCss = document.querySelector("#pcCss");
+			pcCss.parentNode.removeChild(pcCss);
+		}
+	</script>
+	<!--开发环境 Vue-->
+	<!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+	
+	<!--生产环境 Vue-->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
 	<body>
 		<div id="container">
 		<header :style="'height:' + headerHeight + 'px;'">
@@ -99,7 +102,7 @@
 			var main = new Vue({
 				el: "main",
 				data: {
-					mainHeight: deviceType == "pc" ? 530 : (document.documentElement.clientHeight || document.body.clientHeight)
+					mainHeight: deviceType == "pc" ? 530 : (document.documentElement.clientHeight || document.body.clientHeight),
 				}
 			});
 			var footer = new Vue({

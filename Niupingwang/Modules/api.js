@@ -62,6 +62,31 @@ const Apis = {
         });
     },
 
+    "ensureUser": (req, res) => {
+        let queryObj = Utils.ensureQueryObj(req.query);
+        if (!queryObj) {
+            res.send("Error Do not have phonenum or id");
+            res.end();
+            return;
+        }
+        DBUtil((db, client) => {
+            let users = db.collection("users");
+            users.find(queryObj, { _id: 0, salt: 0, passwordhash: 0 }).toArray(
+                (err, data) => {
+                    if (err) {
+                        res.send("no");
+                    } else if (data.length == 0) {
+                        res.send("no");
+                    } else {
+                        res.send("yes");
+                    }
+                    res.end();
+                    client.close();
+                }
+            );
+        });
+    },
+
     "getUserMsg": (req, res) => {
         let queryObj = Utils.ensureQueryObj(req.query);
         if (!queryObj) {

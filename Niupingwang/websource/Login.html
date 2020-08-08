@@ -4,10 +4,140 @@
 <head>
     <meta charset="utf-8" />
     <title>超级点评 - 登录</title>
+    <link id="cssLink" type="text/css" href="css/Login_pc.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var deviceType =
+            (function () {
+                var userAgent = navigator.userAgent;
+                if (userAgent.includes("Windows")) {
+                    return "pc";
+                } else if (userAgent.includes("iPhone")
+                    || userAgent.includes("Android")) {
+                    return "mobile";
+                } else {
+                    return "pc";
+                }
+            })();
+
+        if (deviceType == "mobile") {
+            var cssLink = document.querySelector("#cssLink");
+            cssLink.href = "css/Login_mb.css";
+        }
+
+        var params = (function () {
+            var href = location.href;
+            if (href.indexOf('?') == -1) {
+                return null;
+            }
+            href = href.slice(href.indexOf('?') + 1);
+            href = href.split("&");
+            var ans = {};
+            for (var i = 0; i < href.length; i++) {
+                var tmp = href[i].split("=");
+                ans[tmp[0]] = tmp[1];
+            }
+            return ans;
+        })();
+
+    </script>
+    <!--开发环境 Vue-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--生产环境 Vue-->
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
 </head>
 <body>
-    <footer>
+    <main :style="'height:' + mainHeight + 'px;'">
+        <div id="box" :style="'width:' + boxWidth + 'px;'">
+            <div>
+                <h2 v-if="Login">请登录超级点评</h2>
+                <h2 v-else>注册超级点评 分享你的观点</h2>
+                <br />
+                <p class="showError">{{errorMsg}}</p>
+                <input type="text" placeholder="请输入你的手机号" v-model="phonenum" v-on:input="phoneNumInput()" /><br /><br />
+                <input v-if="Login" type="password" placeholder="请输入密码" v-model="passwd" /><br />
+                <span id="ensureLaw">
+                    <input type="checkbox" :checked="Login" /> 同意 <a href="/">用户协议</a>
+                    &nbsp; &nbsp; &nbsp;<a v-if="Login" href="/">忘记密码?</a>
+                </span><span v-if="Login"><br /><br /></span>
+                <input v-if="Login" type="button" value="登录" @click="login()" />
+                <input v-else type="button" value="注册" @click="register()" />
+                <br /><br />
+                <span v-if="Login">没有账号？<a href="#" v-on:click="Login=false;errorMsg='';">注册</a></span>
+                <span v-else>已有账号？<a href="#" v-on:click="Login=true;errorMsg='';">登录</a></span>
 
-    </footer>
+            </div>
+        </div>
+    </main>
+    <script type="text/javascript">
+        var main = new Vue({
+            el: "main",
+            data: {
+                mainHeight: (document.documentElement.clientHeight ||
+                    document.body.clientHeight),
+                Login: true,
+                boxWidth: deviceType == 'pc' ? 300 : (document.documentElement.clientWidth ||
+                    document.body.clientWidth) * 0.8,
+                errorMsg: "",
+                phonenum: "",
+                passwd: ""
+            },
+            methods: {
+                init: function () {
+                    if (params && params.phonenum) {
+                        if (/^1[0-9]{10}$/.test(params.phonenum)) {
+                            this.phonenum = params.phonenum;
+                        }
+                        if (params.stat == "register") {
+                            this.Login = false;
+                        }
+                    }
+                },
+                phoneNumInput: function () {
+                    if (! /^[0-9]{0,11}$/.test(this.phonenum)) {
+                        this.errorMsg = "电话号码输入错误";
+                        if (/[^0-9]/.test(this.phonenum)) {
+                            this.phonenum = "";
+                        }
+                    } else {
+                        this.errorMsg = "";
+                    }
+                },
+                register: function () {
+                    var check = document.querySelector("#ensureLaw input");
+                    if (!check.checked) {
+                        this.errorMsg = "请同意用户协议";
+                        return;
+                    } else if (this.phonenum.length < 11) {
+                        this.errorMsg = "手机号输入有误";
+                        return;
+                    }
+                    fetch("api?atype=ensureUser&phonenum=" + this.phonenum)
+                        .then(
+                            function (response) {
+                                if (response.status == 200) {
+                                    response.text().then(function (txt) {
+                                        if (txt == "yes") {
+                                            main.errorMsg = "你已经注册，请登录";
+                                        } else {
+                                            location.href = "register.html?phonenum=" + main.phonenum;
+                                        }
+                                    });
+                                } else {
+                                    main.errorMsg = "网络异常，请刷新页面再试";
+                                }
+                            }
+                        );
+                },
+                login: function () {
+                    if (this.phonenum.length < 11) {
+                        this.errorMsg = "你的手机号输入有误";
+                    } else if (!this.passwd || this.passwd.length < 6) {
+                        this.errorMsg = "密码不能小于6位";
+                    }
+                }
+            }
+        });
+        main.init();
+    </script>
 </body>
 </html>
