@@ -18,7 +18,9 @@ db.users.ensureIndex({"phonenum" : 1}, {"unique": true});
 
 db.ensure.insert({
 	"phonenum":"1616",
-	"ensureid":"1616"
+	"ensureid":"1616",
+	"day": 21,
+	"time": 5
 });
 
 db.ensure.ensureIndex({"phonenum": 1}, {"unique": true});

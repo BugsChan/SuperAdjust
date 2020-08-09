@@ -1,11 +1,189 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
     <meta charset="utf-8" />
     <title>超级点评 - 注册</title>
+    <link id="cssLink" href="css/Login_pc.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        var deviceType =
+            (function () {
+                var userAgent = navigator.userAgent;
+                if (userAgent.includes("Windows")) {
+                    return "pc";
+                } else if (userAgent.includes("iPhone")
+                    || userAgent.includes("Android")) {
+                    return "mobile";
+                } else {
+                    return "pc";
+                }
+            })();
+
+        if (deviceType == "mobile") {
+            var cssLink = document.querySelector("#cssLink");
+            cssLink.href = "css/Login_mb.css";
+        }
+
+        var params = (function () {
+            var href = location.href;
+            if (href.indexOf('?') == -1) {
+                return null;
+            }
+            href = href.slice(href.indexOf('?') + 1);
+            href = href.split("&");
+            var ans = {};
+            for (var i = 0; i < href.length; i++) {
+                var tmp = href[i].split("=");
+                ans[tmp[0]] = tmp[1];
+            }
+            return ans;
+        })();
+
+    </script>
+    <!--开发环境 Vue-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--生产环境 Vue-->
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
 </head>
 <body>
-    ces 
+    <main :style="'height:' + mainHeight + 'px;'">
+        <div id="box" :style="'width:' + boxWidth + 'px;'">
+            <div>
+                <h2>{{attention}}</h2>
+                <br />
+                <p class="showError">{{errorMsg}}</p>
+                <input v-show="!ensured" type="text" placeholder="请输入短信校验码" v-model="ensureid" />
+                <input v-show="ensured" type="text" placeholder="请设置昵称" v-model="name" />
+                <span v-show="ensured"><br /><br /></span>
+                <input v-show="ensured" type="password" placeholder="请输入密码" v-model="passwd" />
+                <span v-show="ensured"><br /><br /></span>
+                <input v-show="ensured" type="password" placeholder="请再次输入密码" v-model="passwdAgain" />
+                <span v-show="!ensured" id="ensureLaw">
+                    <a href="#" @click="getEnsureId()">{{sendAttention}}</a>
+                </span><br /><br />
+                <input v-if="!ensured" type="button" value="下一步" @click="nextStep()" />
+                <input v-else type="button" value="确定" @click="register()" />
+                <br /><br />
+                <span>手机号错误？<a href="Login.html?stat=register">返回</a></span>
+
+            </div>
+        </div>
+    </main>
+    <script type="text/javascript">
+
+        function createSalt() {
+            var seed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklnmpoqrst"
+                + "uvwxyz0123456890_!@#$%^&*+~";
+            var salt = "";
+            for (var i = 0; i < 6; i++) {
+                salt += seed[parseInt(Math.random() * seed.length)];
+            }
+            return salt;
+        };
+
+        var main = new Vue({
+            el: "main",
+            data: {
+                mainHeight: (document.documentElement.clientHeight ||
+                    document.body.clientHeight),
+                boxWidth: deviceType == 'pc' ? 300 : (document.documentElement.clientWidth ||
+                    document.body.clientWidth) * 0.8,
+                errorMsg: "",
+                phonenum: "",
+                passwd: "",
+                attention: "",
+                ensureid: "",
+                canGet: true,
+                sendAttention: "重新发送",
+                ensured: false,
+                name: "",
+                passwd: "",
+                passwdAgain: "",
+                salt: ""
+            },
+            methods: {
+                init: function () {
+                    if (params && params.phonenum) {
+                        if (/^1[0-9]{10}$/.test(params.phonenum)) {
+                            this.phonenum = params.phonenum;
+                            this.attention = "验证您的手机号" + this.phonenum;
+                            this.getEnsureId();
+                            return;
+                        }
+                    }
+                    location.href = "Login.html?stat=register";
+                },
+                getEnsureId: function () {
+                    if (!this.canGet) {
+                        this.errorMsg = "稍后才能重新发送";
+                        return;
+                    }
+                    fetch("api?atype=ensureId&phonenum=" + this.phonenum)
+                        .then(function (response) {
+                            if (response.status == 200) {
+                                response.text().then(function (txt) {
+                                    if (txt == "Ok") {
+                                        var timeout = 60;
+                                        main.canGet = false;
+                                        var timer = setInterval(function () {
+                                            if (--timeout > 0) {
+                                                main.sendAttention = "重新发送(" + timeout + ")";
+                                            } else {
+                                                main.sendAttention = "重新发送";
+                                                main.canGet = true;
+                                                clearInterval(timer);
+                                            }
+                                        }, 1000);
+                                    } else {
+                                        main.errorMsg = "验证码获取失败";
+                                    }
+                                });
+                            } else {
+                                main.errorMsg = "获取校验码失败";
+                            }
+                        });
+                },
+                nextStep: function () {
+                    if (this.ensureid.length != 6) {
+                        this.errorMsg = "校验码输入错误";
+                        return;
+                    }
+                    fetch("api?atype=ensureEnsureId&ensureid=" + this.ensureid + "&phonenum=" + this.phonenum).then(
+                        function (response) {
+                            if (response.status == 200) {
+                                response.text().then(
+                                    function (txt) {
+                                        if (txt == "yes") {
+                                            main.ensured = true;
+                                            main.attention = "设置昵称和密码";
+                                            mian.errorMsg = "";
+                                        } else {
+                                            main.errorMsg = "校验码错误";
+                                        }
+                                    }
+                                );
+                            } else {
+                                main.errorMsg = "校验码验证失败";
+                            }
+                        }
+                    );
+                },
+                register: function () {
+                    if (this.passwd.length < 6) {
+                        this.errorMsg = "密码不能小于6位";
+                    } else if (this.passwd != this.passwdAgain) {
+                        this.errorMsg = "两次输入的密码不同，请仔细检查";
+                    } else if (!this.name) {
+                        this.errorMsg = "昵称不能为空";
+                    } else if (this.name.length > 30) {
+                        this.errorMsg = "昵称的长度不能大于30个字符";
+                    } else {
+                        this.salt = createSalt();
+                        //var hash = 
+                    }
+                }
+            }
+        });
+        main.init();
+    </script>
 </body>
 </html>

@@ -57,10 +57,17 @@
     <Content Include="websource\css\index_mb.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="websource\css\Login_mb.css" />
+    <Content Include="websource\css\Login_pc.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="websource\imgs\index_banner.png" />
     <Content Include="websource\imgs\logo.png" />
     <Content Include="websource\index.html" />
     <Content Include="websource\Login.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="websource\register.html">
       <SubType>Code</SubType>
     </Content>
   </ItemGroup>

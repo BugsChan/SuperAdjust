@@ -3,7 +3,7 @@
     "url": "mongodb://127.0.0.1:27017/",
     "dbName": "Niupingwang",
     "collections": {
-      "ensure": [ "phonenum", "ensureid" ],
+      "ensure": [ "phonenum", "ensureid", "day", "time" ],
       "users": [ "id", "phonenum", "name", "salt", "passwordhash", "icon" ],
       "adjust": [ "adjid", "pageIndex", "header", "userid", "to", "content", "time" ],
       "like": ["userid", "adjid"]

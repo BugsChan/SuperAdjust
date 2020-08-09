@@ -24,24 +24,29 @@ const Apis = {
     //获取验证码
     "ensureId": (req, res) => {
         let phonenum = req.query.phonenum;
-        let ensureid = "" + parseInt(Math.random() * 10000);
-        while (ensureid.length < 4) {
+        let ensureid = "" + parseInt(Math.random() * 1000000);
+        while (ensureid.length < 6) {
             ensureid += '0';
         }
         if (!phonenum || !SendMsg(phonenum, ensureid)) {
             res.send("Error ensureId: Phone number error");
             res.end();
+            return;
         }
         DBUtil((db, client) => {
             let ensure = db.collection("ensure");
 
             ensure.updateOne(
                 { "phonenum": phonenum },
-                { $set: { "ensureid": ensureid } },
+                { $set: { "ensureid": ensureid, "day": new Date().getDay(), "time": 0 } },
                 (err, data) => {
                     if (err) {
+                        res.send("Error Can not connect to database");
+                        res.end();
+                        client.close();
+                    }else if (data.result.n == 0) {
                         ensure.insertOne(
-                            { "phonenum": phonenum, "ensureid": ensureid },
+                            { "phonenum": phonenum, "ensureid": ensureid, "day": new Date().getDay(), "time": 0 },
                             (err, data) => {
                                 if (err) {
                                     res.send("Error ensureId: Faild to save into database");
@@ -57,6 +62,40 @@ const Apis = {
                         res.end();
                         client.close();
                     }
+                }
+            );
+        });
+    },
+
+    "ensureEnsureId": (req, res) => {
+        let phonenum = req.query.phonenum;
+        let ensureid = req.query.ensureid;
+        if (!phonenum || !ensureid) {
+            res.send("Error Link error");
+            res.end();
+            return;
+        }
+        DBUtil((db, client) => {
+            let ensure = db.collection("ensure");
+            ensure.find({ "phonenum": phonenum }, { _id: 0, ensureid: 1, day: 1, time: 1 }).toArray(
+                (err, data) => {
+                    if (err || data.length == 0) {
+                        res.send("no");
+                    } else if (data[0].time > 100) {
+                        res.send("no");
+                    }else if (data[0].ensureid == ensureid) {
+                        res.send("yes");
+                    } else {
+                        res.send("no");
+                    }
+                    res.end();
+                    ensure.updateOne(
+                        { "phonenum": phonenum },
+                        { $set: { "time": data[0].time + 1 } },
+                        (err, _data) => {
+                            client.close();
+                        }
+                    );
                 }
             );
         });
