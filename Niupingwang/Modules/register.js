@@ -50,14 +50,15 @@ const Register = (req, res) => {
         //通过验证码对手机号进行验证
         let ensure = db.collection("ensure");
         ensure.find({ "phonenum": query.phonenum }, { ensureid: 1 }).toArray((err, data) => {
-            if (err || data.ensureid != query.ensureid) {
+            if (err || data[0].ensureid != query.ensureid) {
                 res.send("Error ensure id");
                 res.end();
                 client.close();
             } else {
                 let users = db.collection("users");
+                let id = MkId();
                 users.insertOne({
-                    "id": MkId(), "name": query.username,
+                    "id": id, "name": query.username,
                     "phonenum": query.phonenum,
                     "salt": query.salt, "passwordhash": query.passwdhash,
                     "icon": query.icon
@@ -66,7 +67,7 @@ const Register = (req, res) => {
                     if (err) {
                         res.send("Error Failed to register");
                     } else {
-                        res.send("Ok");
+                        res.send("Ok:" + id);
                     }
                     res.end();
                     client.close();

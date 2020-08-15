@@ -64,6 +64,9 @@
     <Content Include="websource\imgs\index_banner.png" />
     <Content Include="websource\imgs\logo.png" />
     <Content Include="websource\index.html" />
+    <Content Include="websource\js\sha256.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="websource\Login.html">
       <SubType>Code</SubType>
     </Content>

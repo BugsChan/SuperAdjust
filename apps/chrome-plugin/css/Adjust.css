@@ -1,0 +1,83 @@
+#CJDP_CONTAINER{
+	width: 30% !important;
+	height: 80% !important;
+	z-index: 1000 !important;
+	position: fixed !important;
+	right: 10px !important;
+	bottom: 10px !important;
+	background-color: #DBEBDB;
+	overflow: auto;
+}
+
+#CJDP_EXPAND{
+	display: block;
+	width: 80px !important;
+	height: 30px !important;
+	font-size: 13px !important;
+	position: fixed !important;
+	right: 30px !important;
+	bottom: 150px !important;
+	border: none;
+	background-color: #CADACA;
+}
+#CJDP_EXPAND img{
+	width: 15px !important;
+	height: 15px !important;
+}
+
+#CJDP_HEADER{
+	width: 100% !important;
+	height: 30px !important;
+	font-size: 14px !important;
+	line-height: 30px !important;
+	text-indent: 1em !important;
+	position: sticky !important;
+	top: 0px !important;
+	background-color: #CADACA;
+}
+
+#CJDP_QUIT{
+	font-size: 20px !important;
+	float: right !important;
+	margin-right: 10px !important;
+	cursor: pointer !important;
+}
+
+#CJDP_FOOTER{
+	position: sticky !important;
+	width: 100% !important;
+	bottom: 0px !important;
+	height: 60px !important;
+	text-align: center !important;
+	line-height: 30px !important;
+	background-color: #DBEBDB;
+}
+
+#CJDP_FOOTER span{
+	cursor: pointer !important;
+}
+
+#CJDP_PAGE{
+	display: inline-block !important;
+	width: 50px !important;
+	text-align: center !important;
+}
+
+#CJDP_INPUT{
+	width: 70% !important;
+	background-color: white !important;
+	border: none !important;
+	height: 25px !important;
+	line-height: 25px;
+}
+
+#CJDP_INPUT_SURE{
+	width: 50px !important;
+	height: 25px !important;
+	border: none !important;
+	background-color: #808080;
+}
+
+.CJDP_ADJ{
+	margin: 10px 30px !important;
+}

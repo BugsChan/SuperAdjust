@@ -38,7 +38,7 @@ const Apis = {
 
             ensure.updateOne(
                 { "phonenum": phonenum },
-                { $set: { "ensureid": ensureid, "day": new Date().getDay(), "time": 0 } },
+                { $set: { "ensureid": ensureid, "day": new Date().getDate(), "time": 0 } },
                 (err, data) => {
                     if (err) {
                         res.send("Error Can not connect to database");
@@ -46,7 +46,7 @@ const Apis = {
                         client.close();
                     }else if (data.result.n == 0) {
                         ensure.insertOne(
-                            { "phonenum": phonenum, "ensureid": ensureid, "day": new Date().getDay(), "time": 0 },
+                            { "phonenum": phonenum, "ensureid": ensureid, "day": new Date().getDate(), "time": 0 },
                             (err, data) => {
                                 if (err) {
                                     res.send("Error ensureId: Faild to save into database");
@@ -81,7 +81,7 @@ const Apis = {
                 (err, data) => {
                     if (err || data.length == 0) {
                         res.send("no");
-                    } else if (data[0].time > 100) {
+                    } else if (data[0].time > 150) {
                         res.send("no");
                     }else if (data[0].ensureid == ensureid) {
                         res.send("yes");
@@ -137,11 +137,11 @@ const Apis = {
             let users = db.collection("users");
             users.find(queryObj, { "_id": 0, salt: 0, passwordhash: 0}).toArray(
                 (err, data) => {
-                    if (err) {
+                    if (err || data.length == 0) {
                         res.send("Error User dose not exit");
                     } else {
                         data.icon = Conf().icon.baseUrl + data.icon;
-                        res.send(JSON.stringify(data));
+                        res.send(JSON.stringify(data[0]));
                     }
                     res.end();
                     client.close();
@@ -161,10 +161,10 @@ const Apis = {
             let users = db.collection("users");
             users.find(queryObj, { "_id": 0, salt: 1 }).toArray(
                 (err, data) => {
-                    if (err) {
+                    if (err || data.length == 0) {
                         res.send("Error User dose not exit");
                     } else {
-                        res.send(JSON.stringify(data));
+                        res.send("Ok:" + data[0].salt);
                     }
                     res.end();
                     client.close();

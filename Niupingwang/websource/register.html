@@ -68,6 +68,7 @@
             </div>
         </div>
     </main>
+    <script type="text/javascript" src="js/sha256.js"></script>
     <script type="text/javascript">
 
         function createSalt() {
@@ -155,7 +156,7 @@
                                         if (txt == "yes") {
                                             main.ensured = true;
                                             main.attention = "设置昵称和密码";
-                                            mian.errorMsg = "";
+                                            main.errorMsg = "";
                                         } else {
                                             main.errorMsg = "校验码错误";
                                         }
@@ -178,7 +179,34 @@
                         this.errorMsg = "昵称的长度不能大于30个字符";
                     } else {
                         this.salt = createSalt();
-                        //var hash = 
+                        var hash = SHA256(this.salt + this.passwd);
+                        fetch("register?phonenum="
+                            + this.phonenum + "&username=" + this.name
+                            + "&salt=" + this.salt + "&ensureid=" + this.ensureid
+                            + "&icon=No&passwdhash=" + hash
+                        ).then(function (response) {
+                            if (response.status != 200) {
+                                main.errorMsg = "注册失败，请重试";
+                                return;
+                            } else {
+                                response.text().then(function (txt) {
+                                    if (!txt.startsWith("Ok")) {
+                                        console.log(txt);
+                                        main.errorMsg = "注册失败，请重试";
+                                        return;
+                                    }
+                                    var CJDP_CACHE = {
+                                        "passwdhash": hash,
+                                        "username": main.name,
+                                        "phonenum": main.phonenum,
+                                        "id": txt.split(":")[1]
+                                    };
+
+                                    localStorage.setItem("CJDP_CACHE", JSON.stringify(CJDP_CACHE));
+                                    location.href = "user-home.html";
+                                });
+                            }
+                        });
                     }
                 }
             }

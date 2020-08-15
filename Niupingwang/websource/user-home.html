@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>用户主页|</title>
+		<script type="text/javascript">
+			var deviceType =
+				(function () {
+					var userAgent = navigator.userAgent;
+					if (userAgent.includes("Windows")) {
+						return "pc";
+					} else if (userAgent.includes("iPhone")
+						|| userAgent.includes("Android")) {
+						return "mobile";
+					} else {
+						return "pc";
+					}
+				})();
+			
+			var userMsg = localStorage.getItem("CJDP_CACHE");
+			if(!userMsg){
+				location.href = "Login.html";
+			}
+			userMsg = JSON.parse(userMsg);
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

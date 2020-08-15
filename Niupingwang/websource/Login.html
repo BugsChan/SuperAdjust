@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -64,10 +64,10 @@
                 <br /><br />
                 <span v-if="Login">没有账号？<a href="#" v-on:click="Login=false;errorMsg='';">注册</a></span>
                 <span v-else>已有账号？<a href="#" v-on:click="Login=true;errorMsg='';">登录</a></span>
-
-            </div>
+			</div>
         </div>
     </main>
+    <script type="text/javascript" src="js/sha256.js"></script>
     <script type="text/javascript">
         var main = new Vue({
             el: "main",
@@ -131,9 +131,67 @@
                 login: function () {
                     if (this.phonenum.length < 11) {
                         this.errorMsg = "你的手机号输入有误";
+                        return;
                     } else if (!this.passwd || this.passwd.length < 6) {
                         this.errorMsg = "密码不能小于6位";
+                        return;
                     }
+                    fetch("api?atype=getSalt&phonenum=" + this.phonenum).then(
+                        function (response) {
+                            if (response.status != 200) {
+                                main.errorMsg = "登录失败，请重新登录";
+                            } else {
+                                response.text().then(function (txt) {
+                                    if (!txt.startsWith("Ok")) {
+                                        main.errorMsg = "用户不存在";
+                                    } else {
+                                        let salt = txt.split(":")[1];
+                                        let passwdhash = SHA256(salt + main.passwd);
+                                        fetch("login?phonenum=" + main.phonenum + "&passwdhash=" + passwdhash).then(
+                                            function (response) {
+                                                if (response.status != 200) {
+                                                    main.errorMsg = "登录失败，请重新登录";
+                                                } else {
+                                                    response.text().then(function (txt) {
+                                                        if (txt.startsWith("Ok")) {
+                                                            //登录成功,获取用户信息
+                                                            fetch("api?atype=getUserMsg&phonenum=" + main.phonenum).then(
+                                                                function (response) {
+                                                                    if (response.status != 200) {
+                                                                        main.errorMsg = '获取用户信息失败,请检查网络连接';
+                                                                    } else {
+                                                                        response.text().then(function (txt) {
+                                                                            if (txt.startsWith("Error")) {
+                                                                                main.errorMsg = "获取用户信息失败";
+                                                                            } else {
+                                                                                var userInfo = JSON.parse(txt);
+                                                                                var CJDP_CACHE = {
+                                                                                    "passwdhash": passwdhash,
+                                                                                    "username": userInfo.name,
+                                                                                    "phonenum": main.phonenum,
+                                                                                    "id": userInfo.id
+                                                                                };
+                                                                                localStorage.setItem("CJDP_CACHE", JSON.stringify(CJDP_CACHE));
+                                                                                location.href = "user-home.html";
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                }
+                                                            );
+
+                                                        } else {
+                                                            main.errorMsg = "密码错误，请检查后再试";
+                                                            console.log(txt);
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        );
+                                    }
+                                });
+                            }
+                        }
+                    );
                 }
             }
         });
