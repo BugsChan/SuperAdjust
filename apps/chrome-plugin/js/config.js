@@ -4,5 +4,6 @@ var CJDP_Config = {
 		"aggrement": "http"
 	},
 	"loginPath": "/Login.html",
-	"homepage": "/user-home.html"
+	"homepage": "/user-home.html",
+	"adjustApi": "/api/adjust"
 };

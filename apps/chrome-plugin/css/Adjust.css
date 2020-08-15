@@ -80,4 +80,10 @@
 
 .CJDP_ADJ{
 	margin: 10px 30px !important;
+	text-align: justify;
+	border-bottom: 0.5px #CACACA solid !important;
+}
+
+.CJDP_CONTENT{
+	text-indent: 2em !important;
 }

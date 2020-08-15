@@ -286,7 +286,7 @@ const Utils = {
                 (err, data) => {
                     if (err) {
                         callback("Error User dose not exit");
-                    } else if (data.passwordhash == hash) {
+                    } else if (data.length > 0 && data[0].passwordhash == hash) {
                         callback("Ok");
                     } else {
                         callback("Error Password");

@@ -5,6 +5,7 @@ chrome.runtime.onMessage.addListener(
 		switch(request.rtype){
 			case "webReq":
 				Ajax(request.url, request.body, request.method, function(res){
+					
 					sendResponse(res);
 				});
 				break;
@@ -17,7 +18,7 @@ chrome.runtime.onMessage.addListener(
 				break;
 			case "getStorage":
 				chrome.storage.local.get(request.key, function(res){
-					sendResponse(res);
+					sendResponse(res.CJDP_CACHE);
 				});
 				break;
 			case "removeStorage":
@@ -25,19 +26,24 @@ chrome.runtime.onMessage.addListener(
 					sendResponse('Ok');
 				});
 				break;
-		}
+		};
+		return true;
 	}
 );
 
 function Ajax(url, body, method, callback){
+	
 	var XHR = new XMLHttpRequest();
 	XHR.open(method, url, true);
+	XHR.setRequestHeader("Content-Type", "application/json");
+	console.log(typeof body);
 	XHR.send(body);
 	
 	XHR.onreadystatechange = function(){
 		if(XHR.readyState != 4){
 			return;
 		}
+		console.log(XHR.responseText);
 		callback(XHR.responseText);
 	};
 };
