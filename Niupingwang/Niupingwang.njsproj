@@ -53,12 +53,18 @@
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="userImages\test.txt" />
+    <Content Include="websource\changeMsg.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="websource\css\index_pc.css" />
     <Content Include="websource\css\index_mb.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="websource\css\Login_mb.css" />
     <Content Include="websource\css\Login_pc.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="websource\download.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="websource\imgs\index_banner.png" />

@@ -142,8 +142,9 @@ function Upload(content){
 		function(res){
 			if(res == "Ok"){
 				alert("发送成功");
+				document.querySelector("#CJDP_INPUT").value = "";
 			}else{
-				alert("发送失败");
+				alert("发送失败, 请再试一次");
 			}
 		}
 	);
