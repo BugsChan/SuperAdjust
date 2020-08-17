@@ -202,7 +202,7 @@ const Apis = {
         DBUtil((db, client) => {
             let ensure = db.collection("ensure");
             ensure.find({ "phonenum": phonenum }).toArray((err, data) => {
-                if (err || data.ensureid != ensureid) {
+                if (err || data[0].ensureid != ensureid) {
                     res.send("Error Ensureid error");
                     res.end();
                     client.close();
@@ -234,7 +234,7 @@ const Apis = {
             res.end();
             return;
         }
-        Utils.ensurePasswd(queryObj, hash, (stat, collection) => {
+        Utils.ensurePasswd(queryObj, hash, (stat) => {
             if (stat != "Ok") {
                 res.send(stat);
                 res.end();

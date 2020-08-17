@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
@@ -57,7 +57,7 @@
                 <input v-if="Login" type="password" placeholder="请输入密码" v-model="passwd" /><br />
                 <span id="ensureLaw">
                     <input type="checkbox" :checked="Login" /> 同意 <a href="/">用户协议</a>
-                    &nbsp; &nbsp; &nbsp;<a v-if="Login" href="/">忘记密码?</a>
+                    &nbsp; &nbsp; &nbsp;<a v-if="Login" href="changePassword.html">忘记密码?</a>
                 </span><span v-if="Login"><br /><br /></span>
                 <input v-if="Login" type="button" value="登录" @click="login()" />
                 <input v-else type="button" value="注册" @click="register()" />
@@ -146,7 +146,9 @@
                                         main.errorMsg = "用户不存在";
                                     } else {
                                         let salt = txt.split(":")[1];
+                                        console.log("salt:" + salt);
                                         let passwdhash = SHA256(salt + main.passwd);
+                                        console.log(passwdhash);
                                         fetch("login?phonenum=" + main.phonenum + "&passwdhash=" + passwdhash).then(
                                             function (response) {
                                                 if (response.status != 200) {
@@ -172,7 +174,7 @@
                                                                                     "id": userInfo.id
                                                                                 };
                                                                                 localStorage.setItem("CJDP_CACHE", JSON.stringify(CJDP_CACHE));
-                                                                                location.href = "user-home.html";
+                                                                                location.href = "user-home.html?attention=你已登录成功，请关闭该页面";
                                                                             }
                                                                         });
                                                                     }

@@ -1,8 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>用户主页|</title>
+		<title>用户主页</title>
+        <style type="text/css">
+			h1{
+				text-align:center;
+			}
+		</style>
 		<script type="text/javascript">
 			var deviceType =
 				(function () {
@@ -22,10 +27,32 @@
 				location.href = "Login.html";
 			}
 			userMsg = JSON.parse(userMsg);
-			
+
+            var params = (function () {
+                var href = location.href;
+                if (href.indexOf('?') == -1) {
+                    return null;
+                }
+                href = href.slice(href.indexOf('?') + 1);
+                href = href.split("&");
+                var ans = {};
+                for (var i = 0; i < href.length; i++) {
+                    var tmp = href[i].split("=");
+                    ans[tmp[0]] = tmp[1];
+                }
+                return ans;
+            })();
 		</script>
 	</head>
 	<body>
 		<h1>你已经登录成功，请关闭该页面。</h1>
+        <script type="text/javascript">
+			document.querySelector("h1").innerText = decodeURI(params.attention);
+			if (params.timeout && params.href) {
+				setTimeout(function () {
+					location = params.href;
+				}, params.timeout);
+            }
+		</script>
 	</body>
 </html>

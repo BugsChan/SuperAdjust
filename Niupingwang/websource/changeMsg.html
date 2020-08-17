@@ -4,8 +4,108 @@
 <head>
     <meta charset="utf-8" />
     <title>更改信息</title>
+    <link id="cssLink" href="css/Login_pc.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        var deviceType =
+            (function () {
+                var userAgent = navigator.userAgent;
+                if (userAgent.includes("Windows")) {
+                    return "pc";
+                } else if (userAgent.includes("iPhone")
+                    || userAgent.includes("Android")) {
+                    return "mobile";
+                } else {
+                    return "pc";
+                }
+            })();
+
+        if (deviceType == "mobile") {
+            var cssLink = document.querySelector("#cssLink");
+            cssLink.href = "css/Login_mb.css";
+        }
+
+        var params = (function () {
+            var href = location.href;
+            if (href.indexOf('?') == -1) {
+                return null;
+            }
+            href = href.slice(href.indexOf('?') + 1);
+            href = href.split("&");
+            var ans = {};
+            for (var i = 0; i < href.length; i++) {
+                var tmp = href[i].split("=");
+                ans[tmp[0]] = tmp[1];
+            }
+            return ans;
+        })();
+
+    </script>
+
+    <!--开发环境 Vue-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--生产环境 Vue-->
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
 </head>
 <body>
+    <!--
+        改密码流程：
+        getphonenum, ensure, getpasswd
+        改其它信息流程
+        getpasswd, changeMsg
+    -->
+    <main :style="'height:' + mainHeight + 'px;'">
+        <div id="box" :style="'width:' + boxWidth + 'px;'">
+            <h2>{{attention}}</h2>
+            <br />
+            <p class="showError">{{errorMsg}}</p>
+            <input type="text" placeholder="请输入新的昵称" v-model="name" />
+            <br /><br />
+            <input type="button" value="确定" v-on:click="changeMsgs()" />
+        </div>
+    </main>
+    <script type="text/javascript">
+        var main = new Vue({
+            el: "main",
+            data: {
+                mainHeight: (document.documentElement.clientHeight ||
+                    document.body.clientHeight),
+                boxWidth: deviceType == 'pc' ? 300 : (document.documentElement.clientWidth ||
+                    document.body.clientWidth) * 0.8,
+                attention: "修改用户信息",
+                errorMsg: "",
+                name: ""
+            },
+            methods: {
+                changeMsgs: function () {
+                    var newName = this.name;
+                    var CJDP_CACHE = localStorage.getItem("CJDP_CACHE");
+                    if (!CJDP_CACHE) {
+                        location.href = "Login.html";
+                    }
+                    CJDP_CACHE = JSON.parse(CJDP_CACHE);
 
+                    fetch("api?atype=changeUserMsg&hash="
+                        + CJDP_CACHE.passwdhash + "&name="
+                        + newName + "&id="
+                        + CJDP_CACHE.id).then(
+                            function (response) {
+                                if (response.status != 200) {
+                                    main.errorMsg = "更改失败，请稍后再试";
+                                } else {
+                                    response.text().then(function (text) {
+                                        if (text != "Ok") {
+                                            main.errorMsg = "更改失败，请重新登录";
+                                        } else {
+                                            location.href = "user-home.html?attention=信息更改已成功，请关闭该页面";
+                                        }
+                                    });
+                                }
+                            }
+                        );
+                }
+            }
+        });
+        main.init()
+    </script>
 </body>
 </html>
