@@ -36,14 +36,12 @@ function Ajax(url, body, method, callback){
 	var XHR = new XMLHttpRequest();
 	XHR.open(method, url, true);
 	XHR.setRequestHeader("Content-Type", "application/json");
-	console.log(typeof body);
 	XHR.send(body);
 	
 	XHR.onreadystatechange = function(){
 		if(XHR.readyState != 4){
 			return;
 		}
-		console.log(XHR.responseText);
 		callback(XHR.responseText);
 	};
 };

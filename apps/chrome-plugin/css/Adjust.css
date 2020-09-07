@@ -7,22 +7,47 @@
 	bottom: 10px !important;
 	background-color: #fefffe;
 	overflow: auto;
+	box-shadow: 0px 0px 5px #808080;
+}
+
+#CJDP_CONTAINER *{
+	background-color: inherit !important;
+}
+
+#CJDP_CONTAINER::-webkit-scrollbar{
+	width: 8px;
+	background-color: #f5ftf5;
+}
+
+#CJDP_CONTAINER::-webkit-scrollbar-track{
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+#CJDP_CONTAINER::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	background-color: #999;
 }
 
 #CJDP_EXPAND{
+	padding: 0px !important;
+	margin: 0px !important;
 	display: block;
-	width: 80px !important;
-	height: 30px !important;
+	width: 40px !important;
+	height: 40px !important;
 	font-size: 13px !important;
 	position: fixed !important;
 	right: 30px !important;
 	bottom: 150px !important;
 	border: none;
-	background-color: #CADACA;
+	border-radius: 20px;
+	box-shadow: 0px 0px 5px #808080 !important;
 }
+
+
 #CJDP_EXPAND img{
-	width: 15px !important;
-	height: 15px !important;
+	margin: 0px auto !important;
+	width: 30px !important;
+	display: block !important;
 }
 
 #CJDP_HEADER{
@@ -33,7 +58,7 @@
 	text-indent: 1em !important;
 	position: sticky !important;
 	top: 0px !important;
-	background-color: #CADACA;
+	background-color: #CACACA !important;
 }
 
 #CJDP_QUIT{
@@ -43,6 +68,14 @@
 	cursor: pointer !important;
 }
 
+#CJDP_WARRING{
+	font-size: 12px !important;
+	text-align: left !important;
+	line-height: 20px;
+	margin: 0px 20px !important;
+	color: red !important;
+}
+
 #CJDP_FOOTER{
 	position: sticky !important;
 	width: 100% !important;
@@ -50,7 +83,7 @@
 	height: 60px !important;
 	text-align: center !important;
 	line-height: 30px !important;
-	background-color: #fefffe;
+	background-color: #fefffe !important;
 }
 
 #CJDP_FOOTER span{
@@ -68,18 +101,18 @@
 	background-color: white !important;
 	border: none !important;
 	height: 25px !important;
-	line-height: 25px;
+	line-height: 25px !important;
 }
 
 #CJDP_INPUT_SURE{
 	width: 50px !important;
 	height: 25px !important;
 	border: none !important;
-	background-color: #808080;
+	background-color: #808080 !important;
 }
 
 .CJDP_ADJ{
-	margin: 10px 10px !important;
+	margin: 0px 10px !important;
 	padding: 10px !important;
 	text-align: justify;
 	font-size: 15px !important;
@@ -87,5 +120,6 @@
 }
 
 .CJDP_CONTENT{
-	text-indent: 2em !important;
+	padding-left: 30px !important;
+	padding-top: 7px !important;
 }

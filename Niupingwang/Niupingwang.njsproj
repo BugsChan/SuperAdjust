@@ -56,6 +56,9 @@
     <Content Include="websource\changeMsg.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="websource\changePassword.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="websource\css\index_pc.css" />
     <Content Include="websource\css\index_mb.css">
       <SubType>Code</SubType>
@@ -79,6 +82,7 @@
     <Content Include="websource\register.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="websource\user-home.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modules\" />
