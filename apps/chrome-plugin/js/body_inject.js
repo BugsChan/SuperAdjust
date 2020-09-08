@@ -34,11 +34,12 @@ if(href == CJDP_Config.server.aggrement + "://" + CJDP_Config.server.host
 		<div id="CJDP_HEADER">
 			<span class="CJDP_LEFT">评论</span>
 			<span id='CJDP_QUIT' class='CJDP_RIGHT'>×</span>
+			<p id="CJDP_WARRING">ces</p>
 		</div>
-		<p id="CJDP_WARRING">ces</p>
 		<div id='CJDP_MAIN'></div>
 		<div id='CJDP_FOOTER'>
 			<div id='CJDP_INPUT_BANNER'>
+				<div id="CJDP_REPLY_ATTENTION"><span>回复：</span><span id="CJDP_REPLY_ATTENTION_CONTENT"></span></div>
 				<input type='text' id='CJDP_INPUT' placeholder='请输入你的评论'> 
 				&nbsp; <button id='CJDP_INPUT_SURE'>确定</button>
 			</div>
@@ -69,6 +70,8 @@ if(href == CJDP_Config.server.aggrement + "://" + CJDP_Config.server.host
 	});
 	
 	$("#CJDP_WARRING").css("display", "none");
+	$("#CJDP_REPLY_ATTENTION").css("display", "none");
+	$("#CJDP_REPLY_ATTENTION_CONTENT").text("测试，这是一条神奇的天路");
 	
 	// for(var i = 0 ;i < 50 ;i ++)
 	// 	document.querySelector("#CJDP_MAIN").innerHTML += "<div class='CJDP_ADJ'><p class='CJDP_NAME'>张三</p><p class='CJDP_CONTENT'>这是我的测试这是我的测试这是我的测试这是我的测试</p></div>";
@@ -126,10 +129,20 @@ function getPage(index){
 				for(var i = 0; i < msgs.length; i++){
 					var keyboardman = msgs[i].userMsg[0].name;
 					var content = msgs[i].content;
+					keyboardman = keyboardman.replace(">", "&gt;").replace("<", "&lt;");
+					content = content.replace(">", "&gt;").replace("<", "&lt;");
+					var like = msgs[i].like;
+					var replied = msgs[i].replied.length > 0 ? msgs[i].replied[0].content : "";
+					var adjid = msgs[i].adjid;
 					var adjDom =`
-					<div class='CJDP_ADJ'>
+					<div class='CJDP_ADJ' data-adjid="${adjid}">
 						<p class='CJDP_NAME'>${keyboardman}</p>
+						<p class="CJDP_REPLIED">${replied}</p>
 						<p class='CJDP_CONTENT'>${content}</p>
+						<div class='CJDP_FUNCTIONS'>
+							<div class="CJDP_LIKE"><span>喜欢</span><span class="CJDP_LIKE_NUM">${like}</span></div>
+							<div class="CJDP_REPLY">回复</div>
+						</div>
 					</div>`;
 					$("#CJDP_MAIN").append(adjDom);
 				}
@@ -139,7 +152,7 @@ function getPage(index){
 	);
 };
 
-function Upload(content){
+function Upload(content, replied){
 	var id = Msgs.id;
 	if(!id){
 		location.href = CJDP_Config.server.aggrement + "://"
@@ -162,13 +175,16 @@ function Upload(content){
 				"userid": id,
 				"passwdhash": passwdhash,
 				"pageIndex": pageIndex,
-				"content": content
+				"content": content,
+				"to": replied || null
 			})
 		},
 		function(res){
 			if(res == "Ok"){
 				CJDP_alert("发送成功");
-				document.querySelector("#CJDP_INPUT").value = "";
+				$("#CJDP_INPUT").val("");
+				$("#CJDP_REPLY_ATTENTION").slideUp();
+				$("#CJDP_REPLY_ATTENTION").removeData("repid");
 			}else{
 				CJDP_alert("发送失败, 请再试一次");
 			}
@@ -178,7 +194,10 @@ function Upload(content){
 
 
 $("#CJDP_INPUT_SURE").click(function(){
-	Upload($("#CJDP_INPUT").val());
+	Upload(
+		$("#CJDP_INPUT").val(), 
+		$("#CJDP_REPLY_ATTENTION").data("repid") || null
+	);
 });
 
 $("#CJDP_LAST").click(function(){
@@ -195,6 +214,44 @@ $("#CJDP_NEXT").click(function(){
 	var nowPage = +$("#CJDP_PAGE").text() - 1;
 	getPage(nowPage + 1);
 });
+
+$("#CJDP_MAIN").on("click", ".CJDP_LIKE", function(){
+	var adjid = $(this).parent().parent().data("adjid");
+	var srcEle = $(this);
+	chrome.runtime.sendMessage(
+		{
+			rtype:"webReq",
+			url: CJDP_Config.server.aggrement + "://"
+			+ CJDP_Config.server.host + CJDP_Config.adjustApi
+			+ "?atype=like",
+			method: "POST",
+			body: JSON.stringify({
+				uid: Msgs.id,
+				adjid: adjid
+			})
+		},
+		function(res){
+			if(res == "Ok"){
+				var likeNum = +srcEle.find(".CJDP_LIKE_NUM").text();
+				srcEle.find(".CJDP_LIKE_NUM").text(likeNum + 1);
+				CJDP_alert("点赞成功");
+			}else{
+				CJDP_alert("点赞失败");
+			}
+		}
+	);
+});
+
+$("#CJDP_MAIN").on("click", ".CJDP_REPLY", function(){
+	var adj = $(this).parent().parent();
+	var adjid = adj.data("adjid");
+	var content = adj.find(".CJDP_CONTENT").text();
+	$("#CJDP_REPLY_ATTENTION_CONTENT").text(content.slice(0, 15) + "...");
+	$("#CJDP_REPLY_ATTENTION").data("repid", adjid);
+	$("#CJDP_REPLY_ATTENTION").slideDown();
+	$("#CJDP_INPUT").focus();
+});
+
 
 getPage(0);
 

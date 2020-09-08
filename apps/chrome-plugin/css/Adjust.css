@@ -74,6 +74,7 @@
 	line-height: 20px;
 	margin: 0px 20px !important;
 	color: red !important;
+	background-color: white !important;
 }
 
 #CJDP_FOOTER{
@@ -94,32 +95,83 @@
 	display: inline-block !important;
 	width: 50px !important;
 	text-align: center !important;
+	background-color: rgba(0,0,0,0) !important;
+}
+
+#CJDP_REPLY_ATTENTION{
+	text-align: left !important;
+	font-size: 11px !important;
+	color: #808080 !important;
+	height: 20px !important;
+	padding-left: 13px !important;
 }
 
 #CJDP_INPUT{
+	text-align: left !important;
 	width: 70% !important;
 	background-color: white !important;
-	border: none !important;
+	border: solid black 1px !important;
+	border-radius: 3px !important;
 	height: 25px !important;
 	line-height: 25px !important;
+	
+	box-shadow: 3px 3px 5px #808080 !important;
 }
 
 #CJDP_INPUT_SURE{
 	width: 50px !important;
 	height: 25px !important;
+	border-radius: 3px !important;
+	color: white;
 	border: none !important;
 	background-color: #808080 !important;
+	font-size: inherit !important;
+	font-size: 13px !important;
+	box-shadow: 3px 3px 5px #808080 !important;
 }
 
 .CJDP_ADJ{
 	margin: 0px 10px !important;
 	padding: 10px !important;
 	text-align: justify;
-	font-size: 15px !important;
 	border-bottom: 1px #efe solid !important;
+}
+.CJDP_NAME{
+	font-size: 11px !important;
 }
 
 .CJDP_CONTENT{
 	padding-left: 30px !important;
 	padding-top: 7px !important;
+	font-size: 13px !important;
+}
+
+.CJDP_FUNCTIONS{
+	font-size: 10px !important;
+	color: #999999;
+	cursor: pointer;
+	margin: 15px 0px 0px 35px !important;
+	height: 20px !important;
+}
+
+.CJDP_LIKE{
+	width: 30% !important;
+	float: left;
+}
+
+.CJDP_REPLY{
+	width: 30% !important;
+	float: left;
+}
+
+.CJDP_REPLIED{
+	border-left: #CACACA solid 5px !important;
+	margin-left: 30px !important;
+	margin-top: 3px !important;
+	font-size: 11px !important;
+}
+
+#CJDP_LAST,#CJDP_NEXT,#CJDP_PAGE{
+	background-color: rgba(0,0,0,0) !important;
+	font-size: 11px !important;
 }

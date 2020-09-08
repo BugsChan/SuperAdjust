@@ -34,7 +34,7 @@ const Apis = {
                                 "pageIndex": body.pageIndex,
                                 "header": null,
                                 "userid": body.userid,
-                                "to": null,
+                                "to": body.to || null,
                                 "content": body.content,
                                 "time": new Date().getTime()
                             },
@@ -109,8 +109,28 @@ const Apis = {
                         "userMsg.passwordhash": 0,
                         "userMsg.phonenum": 0
                     }
+                },
+                {
+                    $lookup: {
+                        from: "like",
+                        localField: "adjid",
+                        foreignField: "adjid",
+                        as: "like"
+                    }
+                },
+                //------------²éÑ¯»Ø¸´-----------
+                {
+                    $lookup: {
+                        from: "adjust",
+                        localField: "to",
+                        foreignField: "adjid",
+                        as: "replied",
+                    }
                 }
             ]).toArray((err, data) => {
+                for (let i = 0; i < data.length; i++) {
+                    data[i]['like'] = data[i]['like'].length;
+                }
                 if (err) {
                     res.send("Error Database Error");
                 } else {
@@ -118,6 +138,41 @@ const Apis = {
                 }
                 res.end();
                 client.close();
+            });
+        });
+    },
+    "like": (req, res) => {
+        /**
+         * uid, adjid
+         */
+        let uid = req.body.uid;
+        let adjid = req.body.adjid;
+        if (!uid || !adjid) {
+            res.send("Error Do not have uid or adjid");
+            res.end();
+            return;
+        }
+        DBUtil((db, client) => {
+            let like = db.collection("like");
+            like.find({ userid: uid, adjid: adjid }).toArray((err, data) => {
+                if (err || data.length != 0) {
+                    res.send("Error Network error or just liked");
+                    res.end();
+                    client.close();
+                } else {
+                    like.insertOne(
+                        { userid: uid, adjid: adjid },
+                        (err) => {
+                            if (!err) {
+                                res.send("Ok");
+                            } else {
+                                res.send("Error Network error");
+                            }
+                            res.end();
+                            client.close();
+                        }
+                    );
+                }
             });
         });
     }

@@ -33,6 +33,11 @@ chrome.storage.local.get("CJDP_CACHE", function(CJDP_CACHE){
 			window.close();
 		})
 	};
+	
+	document.querySelector("#changeMsg").onclick = function(){
+		var url = CJDP_Config.server.aggrement + "://" + CJDP_Config.server.host + CJDP_Config.changeMsgPath;
+		window.open(url);
+	}
 });
 
 

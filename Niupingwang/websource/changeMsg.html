@@ -96,6 +96,8 @@
                                         if (text != "Ok") {
                                             main.errorMsg = "更改失败，请重新登录";
                                         } else {
+                                            CJDP_CACHE["username"] = newName;
+                                            localStorage.setItem("CJDP_CACHE", JSON.stringify(CJDP_CACHE));
                                             location.href = "user-home.html?attention=信息更改已成功，请关闭该页面";
                                         }
                                     });

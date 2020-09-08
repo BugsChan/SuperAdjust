@@ -5,5 +5,6 @@ var CJDP_Config = {
 	},
 	"loginPath": "/Login.html",
 	"homepage": "/user-home.html",
-	"adjustApi": "/api/adjust"
+	"adjustApi": "/api/adjust",
+	"changeMsgPath": "/changeMsg.html"
 };
