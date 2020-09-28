@@ -1,7 +1,7 @@
 #CJDP_CONTAINER{
 	width: 30% !important;
 	height: 80% !important;
-	z-index: 1000 !important;
+	z-index: 100000 !important;
 	position: fixed !important;
 	right: 10px !important;
 	bottom: 10px !important;
@@ -41,6 +41,7 @@
 	border: none;
 	border-radius: 20px;
 	box-shadow: 0px 0px 5px #808080 !important;
+	z-index: 100000 !important;
 }
 
 
