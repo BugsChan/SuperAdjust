@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -50,7 +50,7 @@
 			document.querySelector("h1").innerText = decodeURI(params.attention);
 			if (params.timeout && params.href) {
 				setTimeout(function () {
-					location = params.href;
+					location = decodeURIComponent(params.href);
 				}, params.timeout);
             }
 		</script>

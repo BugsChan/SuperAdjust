@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -203,7 +203,12 @@
                                     };
 
                                     localStorage.setItem("CJDP_CACHE", JSON.stringify(CJDP_CACHE));
-                                    location.href = "user-home.html?attention=你已注册成功，请关闭页面";
+									if(params && params.originHref){
+										location.href = "user-home.html?attention=你已注册成功，即将跳转回原页面"
+										+ "&timeout=3000&href=" + params.originHref;
+									}else{
+										location.href = "user-home.html?attention=你已注册成功，请关闭页面";
+									}
                                 });
                             }
                         });

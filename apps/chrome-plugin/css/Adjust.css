@@ -98,35 +98,14 @@
 	background-color: rgba(0,0,0,0) !important;
 }
 
-#CJDP_REPLY_ATTENTION{
+#CJDP_INPUT_INIT{
 	text-align: left !important;
-	font-size: 11px !important;
-	color: #808080 !important;
-	height: 20px !important;
-	padding-left: 13px !important;
-}
-
-#CJDP_INPUT{
-	text-align: left !important;
-	width: 70% !important;
+	width: 99% !important;
 	background-color: white !important;
 	border: solid black 1px !important;
 	border-radius: 3px !important;
 	height: 25px !important;
 	line-height: 25px !important;
-	
-	box-shadow: 3px 3px 5px #808080 !important;
-}
-
-#CJDP_INPUT_SURE{
-	width: 50px !important;
-	height: 25px !important;
-	border-radius: 3px !important;
-	color: white;
-	border: none !important;
-	background-color: #808080 !important;
-	font-size: inherit !important;
-	font-size: 13px !important;
 	box-shadow: 3px 3px 5px #808080 !important;
 }
 
@@ -174,4 +153,83 @@
 #CJDP_LAST,#CJDP_NEXT,#CJDP_PAGE{
 	background-color: rgba(0,0,0,0) !important;
 	font-size: 11px !important;
+}
+
+
+
+#CJDP_INPUT_CONTAINER{
+	position: fixed !important;
+	top: 0px !important;
+	left: 0px !important;
+	z-index: 100000 !important;
+	width: 100% !important;
+	background-color: rgba(0,0,0, 0.5) !important;
+}
+
+#CJDP_INPUT{
+	width: 40% !important;
+	height: 70% !important;
+	display: block !important;
+	background-color: white !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	box-shadow: 3px 3px 5px #808080 !important;
+	border-radius: 3px !important;
+}
+
+#CJDP_INPUT_HEADER{
+	width: 100% !important;
+	height: 50px !important;
+}
+
+#CJDP_INPUT_CLOSE{
+	display: block !important;
+	font-size: 40px !important;
+	height: 50px !important;
+	width: 60px !important;
+	line-height: 50px !important;
+	text-align: center !important;
+	float: right !important;
+	cursor: pointer !important;
+}
+
+#CJDP_REPLY_ATTENTION{
+	text-align: left !important;
+	font-size: 13px !important;
+	color: #808080 !important;
+	height: 20px !important;
+	padding-left: 13px !important;
+}
+
+
+#CJDP_INPUT_AREA{
+	font-size: 16px !important;
+	font-family: "微软雅黑";
+	resize: none !important;
+	display: block !important;
+	width: 95% !important;
+	margin-left: 2% !important;
+}
+
+#CJDP_INPUT_SURE{
+	width: 80px !important;
+	height: 30px !important;
+	border-radius: 3px !important;
+	color: white;
+	border: none !important;
+	background-color: #80a080 !important;
+	line-height: 30px !important;
+	font-size: 15px !important;
+	box-shadow: 3px 3px 5px #808080 !important;
+	float:right !important;
+	margin-right: 30px !important;
+}
+
+#CJDP_INPUT_WARRING{
+	color: red !important;
+	background-color: white !important;
+	font-size: 13px !important;
+	width: 95% !important;
+	margin-left: 2% !important;
+	text-align: left !important;
 }

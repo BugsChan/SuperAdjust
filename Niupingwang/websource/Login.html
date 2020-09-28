@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -119,7 +119,12 @@
                                         if (txt == "yes") {
                                             main.errorMsg = "你已经注册，请登录";
                                         } else {
-                                            location.href = "register.html?phonenum=" + main.phonenum;
+											if(params && params.originHref){
+												location.href = "register.html?phonenum=" + main.phonenum
+												+ "&originHref=" + params.originHref;
+											}else{
+												location.href = "register.html?phonenum=" + main.phonenum;
+											}
                                         }
                                     });
                                 } else {
@@ -174,7 +179,12 @@
                                                                                     "id": userInfo.id
                                                                                 };
                                                                                 localStorage.setItem("CJDP_CACHE", JSON.stringify(CJDP_CACHE));
-                                                                                location.href = "user-home.html?attention=你已登录成功，请关闭该页面";
+                                                                                if(params && params.originHref){
+																					location.href = "user-home.html?attention=你已登录成功，将在3秒后跳回原页面。&timeout=5000&href="
+																					+ params.originHref;
+																				}else{
+																					location.href = "user-home.html?attention=你已登录成功，请关闭本页面";
+																				}
                                                                             }
                                                                         });
                                                                     }

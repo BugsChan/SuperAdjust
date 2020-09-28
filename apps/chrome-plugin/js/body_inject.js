@@ -22,14 +22,13 @@ if(href == CJDP_Config.server.aggrement + "://" + CJDP_Config.server.host
 (function(){
 	//注入container
 	var body = document.body;
-	
 	var container = `
 	<div id="CJDP_CONTAINER"></div>
 	`;
-	
 	$("body").append(container);
 	$("#CJDP_CONTAINER").css("display", "none");
 	
+	//为container注入内容
 	var inner = `
 		<div id="CJDP_HEADER">
 			<span class="CJDP_LEFT">评论</span>
@@ -39,9 +38,7 @@ if(href == CJDP_Config.server.aggrement + "://" + CJDP_Config.server.host
 		<div id='CJDP_MAIN'></div>
 		<div id='CJDP_FOOTER'>
 			<div id='CJDP_INPUT_BANNER'>
-				<div id="CJDP_REPLY_ATTENTION"><span>回复：</span><span id="CJDP_REPLY_ATTENTION_CONTENT"></span></div>
-				<input type='text' id='CJDP_INPUT' placeholder='请输入你的评论'> 
-				&nbsp; <button id='CJDP_INPUT_SURE'>确定</button>
+				<input type='text' id='CJDP_INPUT_INIT' readonly="readonly" placeholder='请输入你的评论'> 
 			</div>
 			<div id='CJDP_PAGE_BANNER'>
 				<span id='CJDP_LAST'>上一页</span>
@@ -50,7 +47,6 @@ if(href == CJDP_Config.server.aggrement + "://" + CJDP_Config.server.host
 			</div>
 		</div>
 	`;
-	
 	$("#CJDP_CONTAINER").append(inner);
 	
 	
@@ -69,12 +65,38 @@ if(href == CJDP_Config.server.aggrement + "://" + CJDP_Config.server.host
 		$("#CJDP_EXPAND").fadeIn();
 	});
 	
+	//注入输入框
+	var inputArea = `
+	<div id="CJDP_INPUT_CONTAINER">
+		<div id="CJDP_INPUT">
+			<div id="CJDP_INPUT_HEADER">
+				<p id="CJDP_INPUT_CLOSE">×</p>
+			</div>
+			<div id="CJDP_INPUT_WARRING">提醒：你的程序优化未完成。。。</div>
+			<div id="CJDP_REPLY_ATTENTION">
+				<span>回复：</span>
+				<span id="CJDP_REPLY_ATTENTION_CONTENT">测试</span>
+			</div>
+			<textarea rows='8' placeholder="请输入你的评论" id="CJDP_INPUT_AREA"></textarea>
+			<br>
+			<button id="CJDP_INPUT_SURE">确定</button>
+		</div>
+	</div>
+	`;
+	$(body).append(inputArea);
+	
+	$("#CJDP_INPUT_CONTAINER").css("height", document.documentElement.clientHeight || document.body.clientHeight);
+	$("#CJDP_INPUT_CONTAINER").css("width", document.documentElement.clientWidth || document.body.clientWidth);
+	$("#CJDP_INPUT").css("margin-top", document.documentElement.clientHeight * 0.15 ||  document.body.clientHeight * 0.15);
+	$("#CJDP_INPUT_CONTAINER").css("display", "none");
+	
 	$("#CJDP_WARRING").css("display", "none");
 	$("#CJDP_REPLY_ATTENTION").css("display", "none");
-	$("#CJDP_REPLY_ATTENTION_CONTENT").text("测试，这是一条神奇的天路");
+	$("#CJDP_INPUT_WARRING").css("display", "none");
 	
-	// for(var i = 0 ;i < 50 ;i ++)
-	// 	document.querySelector("#CJDP_MAIN").innerHTML += "<div class='CJDP_ADJ'><p class='CJDP_NAME'>张三</p><p class='CJDP_CONTENT'>这是我的测试这是我的测试这是我的测试这是我的测试</p></div>";
+	$("#CJDP_INPUT_CLOSE").click(function(){
+		$("#CJDP_INPUT_CONTAINER").fadeOut();
+	});
 })();
 
 
@@ -83,6 +105,14 @@ function CJDP_alert(msg){
 	$("#CJDP_WARRING").slideDown();
 	setTimeout(function(){
 		$("#CJDP_WARRING").slideUp();
+	},3000);
+};
+
+function CJDP_input_alert(msg){
+	$("#CJDP_INPUT_WARRING").text(msg);
+	$("#CJDP_INPUT_WARRING").slideDown();
+	setTimeout(function(){
+		$("#CJDP_INPUT_WARRING").slideUp();
 	},3000);
 };
 
@@ -129,10 +159,12 @@ function getPage(index){
 				for(var i = 0; i < msgs.length; i++){
 					var keyboardman = msgs[i].userMsg[0].name;
 					var content = msgs[i].content;
-					keyboardman = keyboardman.replace(">", "&gt;").replace("<", "&lt;");
-					content = content.replace(">", "&gt;").replace("<", "&lt;");
+					keyboardman = keyboardman.replaceAll(">", "&gt;").replaceAll("<", "&lt;");
+					content = content.replaceAll(">", "&gt;").replaceAll("<", "&lt;");
+					content = content.replaceAll("\n", "<br>");
 					var like = msgs[i].like;
 					var replied = msgs[i].replied.length > 0 ? msgs[i].replied[0].content : "";
+					replied = replied.replaceAll(">", "&gt;").replaceAll("<", "&lt;").replaceAll("\n", "<br>");
 					var adjid = msgs[i].adjid;
 					var adjDom =`
 					<div class='CJDP_ADJ' data-adjid="${adjid}">
@@ -181,12 +213,13 @@ function Upload(content, replied){
 		},
 		function(res){
 			if(res == "Ok"){
-				CJDP_alert("发送成功");
-				$("#CJDP_INPUT").val("");
+				CJDP_input_alert("发送成功");
+				$("#CJDP_INPUT").text("");
 				$("#CJDP_REPLY_ATTENTION").slideUp();
 				$("#CJDP_REPLY_ATTENTION").removeData("repid");
+				$("#CJDP_INPUT_CONTAINER").fadeOut();
 			}else{
-				CJDP_alert("发送失败, 请再试一次");
+				CJDP_input_alert("发送失败, 请再试一次");
 			}
 		}
 	);
@@ -195,7 +228,7 @@ function Upload(content, replied){
 
 $("#CJDP_INPUT_SURE").click(function(){
 	Upload(
-		$("#CJDP_INPUT").val(), 
+		$("#CJDP_INPUT_AREA").val(), 
 		$("#CJDP_REPLY_ATTENTION").data("repid") || null
 	);
 });
@@ -243,13 +276,36 @@ $("#CJDP_MAIN").on("click", ".CJDP_LIKE", function(){
 });
 
 $("#CJDP_MAIN").on("click", ".CJDP_REPLY", function(){
+	var id = Msgs.id;
+	if(!id){
+		var nowHref = location.href;
+		location.href = CJDP_Config.server.aggrement + "://"
+			+ CJDP_Config.server.host + CJDP_Config.loginPath
+			+ "?originHref=" + encodeURIComponent(nowHref);
+		return;
+	}
 	var adj = $(this).parent().parent();
 	var adjid = adj.data("adjid");
 	var content = adj.find(".CJDP_CONTENT").text();
 	$("#CJDP_REPLY_ATTENTION_CONTENT").text(content.slice(0, 15) + "...");
 	$("#CJDP_REPLY_ATTENTION").data("repid", adjid);
 	$("#CJDP_REPLY_ATTENTION").slideDown();
-	$("#CJDP_INPUT").focus();
+	$("#CJDP_INPUT_CONTAINER").fadeIn();
+	$("#CJDP_INPUT_AREA").focus();
+});
+
+
+$("#CJDP_INPUT_INIT").click(function(){
+	var id = Msgs.id;
+	if(!id){
+		var nowHref = location.href;
+		location.href = CJDP_Config.server.aggrement + "://"
+			+ CJDP_Config.server.host + CJDP_Config.loginPath
+			+ "?originHref=" + encodeURIComponent(nowHref);
+		return;
+	}
+	$("#CJDP_INPUT_CONTAINER").fadeIn();
+	$("#CJDP_INPUT_AREA").focus();
 });
 
 
