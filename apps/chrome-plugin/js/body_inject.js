@@ -130,7 +130,9 @@ function getPage(index){
 	var pageIndex = location.href
 	;
 	pageIndex = pageIndex.slice(0, pageIndex.indexOf("?"));
-	
+	if(pageIndex.endsWith("/")){
+		pageIndex = pageIndex.slice(0, pageIndex.length - 1);
+	}
 	chrome.runtime.sendMessage(
 		{
 			rtype: "webReq",
@@ -196,6 +198,9 @@ function Upload(content, replied){
 	var pageIndex = location.href
 	;
 	pageIndex = pageIndex.slice(0, pageIndex.indexOf("?"));
+	if(pageIndex.endsWith("/")){
+		pageIndex = pageIndex.slice(0, pageIndex.length - 1);
+	}
 	chrome.runtime.sendMessage(
 		{
 			rtype: "webReq",
@@ -214,7 +219,8 @@ function Upload(content, replied){
 		function(res){
 			if(res == "Ok"){
 				CJDP_input_alert("发送成功");
-				$("#CJDP_INPUT").text("");
+				CJDP_alert("发送成功");
+				$("#CJDP_INPUT_AREA").val("");
 				$("#CJDP_REPLY_ATTENTION").slideUp();
 				$("#CJDP_REPLY_ATTENTION").removeData("repid");
 				$("#CJDP_INPUT_CONTAINER").fadeOut();
